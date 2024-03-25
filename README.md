@@ -1,3 +1,3 @@
-# _FSDI 106_
+# _FSDI 106: JavaScript and jQuery Solutions_
 
 FSDI 106 course repository.
