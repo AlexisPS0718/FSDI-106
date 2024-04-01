@@ -46,13 +46,37 @@ button:hover {
 }
 
 #list {
-  background-color: #EEEEEE;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: min-content;
   flex: 4;
+  background-color: #EEEEEE;
   padding: 2rem;
+  gap: 3rem;
 }
 
 #form {
   background-color: #31363F;
   flex: 2;
   padding: 2rem;
+}
+
+.card {
+  background-color: #ccc;
+  border-radius: 15px;
+  padding: 3rem;
+  height: fit-content;
+}
+
+#show-form {
+  background-color: #31363F !important;
+  height: fit-content;
+  width: fit-content !important;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 1rem !important;
+}
+
+#show-form:hover {
+  background-color: #222831 !important;
 }

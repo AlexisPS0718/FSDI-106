@@ -35,7 +35,7 @@
         </div>
         <div class="mb-3">
           <label for="inputStatus" class="form-label fw-bold">Status</label>
-          <select name="inputStatus" class="form-select">
+          <select name="inputStatus" class="form-select" id="inputStatus">
             <option value="" selected="true" disabled>Select a status</option>
             <option value="New">New</option>
             <option value="In progress">In progress</option>
@@ -47,8 +47,9 @@
           <label for="inputBudget" class="form-label fw-bold">Budget</label>
           <input type="number" class="form-control" id="inputBudget" placeholder="Write the task budget">
         </div>
-        <button type="submit" class="btn btn-primary fw-bold">Submit</button>
       </form>
+      <button class="btn btn-primary fw-bold mb-3" onclick="register()">Submit</button>
+      <button class="btn btn-primary fw-bold" onclick="hideForm()">Hide form</button>
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
