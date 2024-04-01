@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex: 1;
+}
+
+h1 {
+  background-color: #222831;
+  color: #fff;
+  padding: 1rem;
+  margin: 0;
+}
+
+label {
+  color: #fff;
+}
+
+input,
+button {
+  width: 100% !important;
+}
+
+button {
+  background-color: #76ABAE !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 0.5rem !important;
+}
+
+button:hover {
+  background-color: #82babd !important;
+}
+
+#list {
+  background-color: #EEEEEE;
+  flex: 4;
+  padding: 2rem;
+}
+
+#form {
+  background-color: #31363F;
+  flex: 2;
+  padding: 2rem;
+}
