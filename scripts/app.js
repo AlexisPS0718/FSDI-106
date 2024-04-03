@@ -1,35 +1,37 @@
 let tasks = [];
-let inputTitle;
-let inputDescription;
-let inputColor;
-let inputDate;
-let inputStatus;
-let inputBudget;
 
 window.onload = init;
 
-function Task(title, description, color, date, status, budget) {
-  this.title = title;
-  this.description = description;
-  this.color = color;
-  this.date = date;
-  this.status = status;
-  this.budget = budget;
-}
-
 function init() {
+  const inputTitle = $("#inputTitle");
+  const inputDescription = $("#inputDescription");
+  const inputColor = $("#inputColor");
+  const inputDate = $("#inputDate");
+  const inputStatus = $("#inputStatus");
+  const inputBudget = $("#inputBudget");
+
   let task1 = new Task("Code", "Write a small program", "#76ABAE", "31/03/2014 07:38 p. m.", "New", 150);
 
   tasks.push(task1);
 
-  inputTitle = document.getElementById("inputTitle");
-  inputDescription = document.getElementById("inputDescription");
-  inputColor = document.getElementById("inputColor");
-  inputDate = document.getElementById("inputDate");
-  inputStatus = document.getElementById("inputStatus");
-  inputBudget = document.getElementById("inputBudget");
+  $("#register").click(register);
+  $("#hide").click(hideForm);
 
   displayTasks();
+  testRequest();
+}
+
+function testRequest() {
+  $.ajax({
+    type: "GET",
+    url: "http://fsdiapi.azurewebsites.net",
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  })
 }
 
 function register() {
@@ -38,7 +40,7 @@ function register() {
   if (isValid(newTask)) {
     tasks.push(newTask);
     clearForm();
-    displayTasks();
+    displayTask(newTask);
   }
 }
 
@@ -60,9 +62,8 @@ function clearForm() {
 }
 
 function displayTasks() {
-  const TASK_LIST = document.getElementById('list');
   let taskStatus = '';
-  card = '';
+  cards = '';
 
   for (let i = 0; i < tasks.length; i++) {
     let task = tasks[i];
@@ -84,37 +85,66 @@ function displayTasks() {
         break;
     }
 
-    card += `
+    cards += `
       <div class="card" style="background-color: ${task.color};">
         <p class="fw-bold">${taskStatus}</p>
         <p class="fw-bold">${task.title}</p>
         <p><span class="fw-bold">Description: </span>${task.description}</p>
-        <p><span class="fw-bold">Date: </span>${task.date}</p>
+        <p><span class="fw-bold">Starting date: </span>${task.date}</p>
         <p><span class="fw-bold">Budget: </span>$${task.budget}</p>
       </div>
     `;
   }
 
-  TASK_LIST.innerHTML = card;
+  $("#list").html(cards);
+}
+
+function displayTask(task) {
+  let taskStatus = '';
+  card = '';
+
+  switch (task.status) {
+    case "New":
+      taskStatus = '✨ New';
+      break;
+    case "In progress":
+      taskStatus = '⏳ In progress';
+      break;
+    case "Completed":
+      taskStatus = '✔️ Completed';
+      break;
+    case "Cancelled":
+      taskStatus = '❌ Cancelled';
+      break;
+    default:
+      break;
+  }
+
+  card = `
+      <div class="card" style="background-color: ${task.color};">
+        <p class="fw-bold">${taskStatus}</p>
+        <p class="fw-bold">${task.title}</p>
+        <p><span class="fw-bold">Description: </span>${task.description}</p>
+        <p><span class="fw-bold">Starting date: </span>${task.date}</p>
+        <p><span class="fw-bold">Budget: </span>$${task.budget}</p>
+      </div>
+    `;
+
+  $("#list").append(card);
 }
 
 function hideForm() {
-  const TASK_LIST = document.getElementById('list');
-  const FORM = document.getElementById('form');
-
   const newButton = document.createElement('button');
+
   newButton.setAttribute('id', 'show-form');
   newButton.setAttribute('onclick', 'showForm()');
   newButton.innerHTML = `Show form`;
 
-  FORM.style.display = 'none';
-  TASK_LIST.appendChild(newButton);
+  $("#form").css("display", "none");
+  $("#list").append(newButton);
 }
 
 function showForm() {
-  const FORM = document.getElementById('form');
-
-  document.getElementById('show-form').remove();
-
-  FORM.style.display = 'block';
+  $("#show-form").remove();
+  $("#form").css("display", "block");
 }
