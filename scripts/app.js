@@ -16,20 +16,23 @@ function init() {
 
   $("#register").click(register);
   $("#hide").click(hideForm);
+  $("#search").click(search);
+  $("#delete").click(deleteAll);
+  $("#showAll").click(loadTasks);
 
   displayTasks();
-  testRequest();
+  loadTasks();
 }
 
 function testRequest() {
   $.ajax({
-    type: "GET",
+    type: "DELETE",
     url: "http://fsdiapi.azurewebsites.net",
     success: function (response) {
       console.log(response);
     },
     error: function (error) {
-      console.log(error);
+      alert("An error has occured: " + error);
     }
   })
 }
@@ -40,6 +43,22 @@ function register() {
   if (isValid(newTask)) {
     tasks.push(newTask);
     clearForm();
+
+    $.ajax({
+      type: "POST",
+      url: "http://fsdiapi.azurewebsites.net/api/tasks/",
+      data: JSON.stringify(newTask),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+
+    loadTasks();
     displayTask(newTask);
   }
 }
@@ -147,4 +166,52 @@ function hideForm() {
 function showForm() {
   $("#show-form").remove();
   $("#form").css("display", "block");
+  $("html, body").scrollTop(0);
+}
+
+function loadTasks() {
+  deleteAll();
+
+  $.ajax({
+    type: "GET",
+    url: "http://fsdiapi.azurewebsites.net/api/tasks",
+    success: function (response) {
+      let data = JSON.parse(response);
+
+      for (let i = 0; i < data.length; i++) {
+        displayTask(data[i]);
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+
+function searchTask(name) {
+  $.ajax({
+    type: "GET",
+    url: "http://fsdiapi.azurewebsites.net/api/tasks",
+    success: function (response) {
+      let data = JSON.parse(response);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].title === name) {
+          displayTask(data[i]);
+        }
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+
+function search() {
+  deleteAll();
+  let name = $("#inputSearch").val();
+  searchTask(name);
+}
+
+function deleteAll() {
+  $("#list").html("");
 }

@@ -15,6 +15,12 @@
   <main>
     <section id="list"></section>
     <section id="form">
+      <div class="mb-3">
+        <label for="inputSearch" class="form-label fw-bold">Search</label>
+        <input type="text" class="form-control" id="inputSearch" placeholder="Search a task by title">
+      </div>
+      <button id="search" class="btn btn-primary fw-bold mb-3">Search</button>
+      <button id="showAll" class="btn btn-primary fw-bold mb-3">Show all</button>
       <form>
         <div class="mb-3">
           <label for="inputTitle" class="form-label fw-bold">Title</label>
@@ -49,7 +55,8 @@
         </div>
       </form>
       <button id="register" class="btn btn-primary fw-bold mb-3">Submit</button>
-      <button id="hide" class="btn btn-primary fw-bold">Hide form</button>
+      <button id="hide" class="btn btn-primary fw-bold mb-3">Hide form</button>
+      <button id="delete" class="btn btn-primary fw-bold">Delete all tasks</button>
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
